@@ -22,7 +22,6 @@ public class PedidoController {
 	@PostMapping("")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void criar (
-			@RequestParam("id") int id,
 			@RequestParam("dataEmissao") Date dataEmissao,
 			@RequestParam("horaEmissao") Time horaEmissao,
 			@RequestParam("periodo") String periodo,
@@ -30,7 +29,7 @@ public class PedidoController {
 			@RequestParam("endereco") String endereco,
 			@RequestParam("valorTotal") float valorTotal
 			) {
-		Pedido pedido = new Pedido(id, dataEmissao, horaEmissao, periodo, contrato, endereco, valorTotal);
+		Pedido pedido = new Pedido(dataEmissao, horaEmissao, periodo, contrato, endereco, valorTotal);
 		
 	}
 	

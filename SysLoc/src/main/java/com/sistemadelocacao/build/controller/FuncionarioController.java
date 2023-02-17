@@ -19,10 +19,9 @@ public class FuncionarioController {
 	public void criar(
 			@RequestParam("nome") String nome,
 			@RequestParam("tel") String tel,
-			@RequestParam("senha") String senha,
-			@RequestParam("id") int id
+			@RequestParam("senha") String senha
 			){
-		Funcionario funcionario = new Funcionario(nome, tel, senha, id);
+		Funcionario funcionario = new Funcionario(nome, tel, senha);
 	}
 	
 	@GetMapping("/{id}")

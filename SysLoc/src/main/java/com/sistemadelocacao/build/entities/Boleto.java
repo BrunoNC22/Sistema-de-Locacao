@@ -5,27 +5,43 @@ import java.time.LocalDate;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name= "Boleto")
+@Table(name= "boleto")
 public class Boleto {
 	
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	private int id;
 	
-	
+	@Column
 	private LocalDate dataEmissao;
+	
+	@Column
 	private LocalDate dataPagamento;
+	
+	@Column
 	private boolean pago = false;
+	
+	@Column
 	private float valor;
 	
-	public Boleto (int id, LocalDate dataEmissao, LocalDate dataPagamento, float valor) {
-		this.id = id;
+	
+	public Boleto (LocalDate dataEmissao, float valor) {
 		this.dataEmissao = dataEmissao;
-		this.dataPagamento = dataPagamento;
 		this.valor = valor;
 	}
 	
-	public void pagarBoleto() {
+	public void pagarBoleto(LocalDate dataAtual) {
+		this.dataPagamento = dataAtual;
 		this.pago = true;
 	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	
 }

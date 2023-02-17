@@ -20,13 +20,12 @@ public class ProdutoController {
 	@PostMapping("")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void criar(
-			@RequestParam("id") int id,
 			@RequestParam("descricao") String descricao,
 			@RequestParam("valorDia") float valorDia,
 			@RequestParam("valorSemana") float valorSemana,
 			@RequestParam("valorMes") float valorMes
 			) {
-		Produto produto = new Produto(id, descricao, valorDia, valorSemana, valorMes);
+		Produto produto = new Produto(descricao, valorDia, valorSemana, valorMes);
 	}
 	
 	@GetMapping("/{id}")
