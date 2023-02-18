@@ -27,7 +27,7 @@ public class ClienteController {
 	
 	private Clientes clientes;
 	
-	public ClienteController( Cliente boletos) {
+	public ClienteController( Clientes clientes) {
 		this.clientes = clientes;
 	}
 	
@@ -58,12 +58,16 @@ public class ClienteController {
 		clientes.findById(id).map( clienteExistente -> {
 			cliente.setId(clienteExistente.getId());
 			clientes.save(cliente);
-			return boletoExistente;
-			
-		});
+			return clienteExistente;
+		}).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
 	}
 	
-	
+	@GetMapping
+	public List<Cliente> find(Cliente filtro){
+		ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreCase().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+		Example example = Example.of(filtro, matcher);
+		return clientes.findAll(example);
+	}
 	
 	
 	

@@ -31,12 +31,13 @@ public class BoletoController {
 	
 	@GetMapping("{id}")
 	public Boleto getBoletoById(@PathVariable Integer id) {
-				return boletos
-		                .findById(id)
-		                .orElseThrow(() ->
-		                        new ResponseStatusException(HttpStatus.NOT_FOUND,
-		                                "Boleto não encontrado"));
-		                        }
+		return boletos
+				.findById(id)
+		        .orElseThrow(() -> 
+		        	new ResponseStatusException(
+		        			HttpStatus.NOT_FOUND,
+		                    "Boleto não encontrado"));
+	}
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
@@ -52,8 +53,9 @@ public class BoletoController {
                     boletos.delete(boleto);
                     return boleto;
                 })
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Boleto não encontrado") );
+                .orElseThrow(() -> new ResponseStatusException(
+                		HttpStatus.NOT_FOUND,
+                        "Boleto não encontrado"));
     }
     
     @PutMapping("{id}")
@@ -66,7 +68,9 @@ public class BoletoController {
                     boleto.setId(boletoExistente.getId());
                     boletos.save(boleto);
                     return boletoExistente;
-                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Carro não encontrado"));
+                }).orElseThrow(() -> new ResponseStatusException(
+                		HttpStatus.NOT_FOUND, 
+                		"Boleto não encontrado"));
     }
     
     @GetMapping
@@ -75,7 +79,7 @@ public class BoletoController {
                 .matching()
                 .withIgnoreCase()
                 .withStringMatcher(
-                        ExampleMatcher.StringMatcher.CONTAINING );
+                        ExampleMatcher.StringMatcher.CONTAINING);
 
         Example example = Example.of(filtro, matcher);
         return boletos.findAll(example);
