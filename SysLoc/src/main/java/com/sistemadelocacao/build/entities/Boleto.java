@@ -2,6 +2,8 @@ package com.sistemadelocacao.build.entities;
 
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -12,26 +14,28 @@ public class Boleto {
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	private int id;
 	
-	@Column
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable = true, updatable = true)
 	private LocalDate dataEmissao;
 	
-	@Column
+	@Temporal(TemporalType.TIMESTAMP) // <- não está funcionando, pesquisar como funciona
+	@Column(nullable = true, updatable = true)
 	private LocalDate dataPagamento;
 	
 	@Column
 	private boolean pago = false;
 	
-	@Column
+	@Column(nullable = false, updatable = true)
 	private float valor;
 	
 	
-	public Boleto (LocalDate dataEmissao, float valor) {
-		this.dataEmissao = dataEmissao;
+	public Boleto (float valor) {
+		this.dataEmissao = this.dataEmissao.now();
 		this.valor = valor;
 	}
 	
-	public void pagarBoleto(LocalDate dataAtual) {
-		this.dataPagamento = dataAtual;
+	public void pagarBoleto() {
+		this.dataPagamento = this.dataPagamento.now();
 		this.pago = true;
 	}
 
