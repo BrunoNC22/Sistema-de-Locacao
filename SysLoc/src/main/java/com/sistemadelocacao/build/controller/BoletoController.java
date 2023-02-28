@@ -30,8 +30,8 @@ public class BoletoController {
 		this.boletos = boletos;
 	}
 	
-	@GetMapping("{id}")
-	public Boleto getBoletoById(@PathVariable Integer id) {
+	@GetMapping("/{id}")
+	public Boleto getBoletoById(@PathVariable(value = "id", required = true) Integer id) {
 		return boletos
 				.findById(id)
 		        .orElseThrow(() -> 
@@ -42,14 +42,15 @@ public class BoletoController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Boleto save(@RequestParam float valor) { 
+	public Boleto save(@RequestParam(value = "valor") float valor) { 
 		Boleto boleto = new Boleto(valor);
-		return boletos.save(boleto);
+		boletos.save(boleto);
+		return boleto;
 	}
 	
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete( @PathVariable Integer id ){
+    public void delete(@PathVariable Integer id ){
         boletos.findById(id)
                 .map( boleto -> {
                     boletos.delete(boleto);
@@ -60,7 +61,7 @@ public class BoletoController {
                         "Boleto não encontrado"));
     }
     
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update( @PathVariable Integer id,
                         @RequestBody Boleto boleto ){
@@ -75,15 +76,13 @@ public class BoletoController {
                 		"Boleto não encontrado"));
     }
     
-    @GetMapping
-    public List<Boleto> find(Boleto filtro ){
-        ExampleMatcher matcher = ExampleMatcher
-                .matching()
-                .withIgnoreCase()
-                .withStringMatcher(
-                        ExampleMatcher.StringMatcher.CONTAINING);
-
-        Example example = Example.of(filtro, matcher);
-        return boletos.findAll(example);
-    }
+	
+	  @GetMapping 
+	  public List<Boleto> find(Boleto filtro ){ ExampleMatcher matcher = ExampleMatcher .matching() .withIgnoreCase() .withStringMatcher(
+	  ExampleMatcher.StringMatcher.CONTAINING);
+	  
+	  Example example = Example.of(filtro, matcher); 
+	  return boletos.findAll(example); 
+	  }
+	 
 }

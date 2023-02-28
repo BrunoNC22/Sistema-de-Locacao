@@ -14,12 +14,14 @@ public class Boleto {
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	private int id;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	// @Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = true, updatable = true)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dataEmissao;
 	
-	@Temporal(TemporalType.TIMESTAMP) // <- não está funcionando, pesquisar como funciona
+	// @Temporal(TemporalType.TIMESTAMP) // <- não está funcionando, pesquisar como funciona
 	@Column(nullable = true, updatable = true)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dataPagamento;
 	
 	@Column
@@ -30,12 +32,14 @@ public class Boleto {
 	
 	
 	public Boleto (float valor) {
-		this.dataEmissao = this.dataEmissao.now();
+		this.dataEmissao = LocalDate.now();
 		this.valor = valor;
 	}
 	
+	public Boleto() {}
+	
 	public void pagarBoleto() {
-		this.dataPagamento = this.dataPagamento.now();
+		this.dataPagamento = LocalDate.now();
 		this.pago = true;
 	}
 
