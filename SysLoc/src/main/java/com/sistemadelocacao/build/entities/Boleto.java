@@ -50,6 +50,38 @@ public class Boleto {
 	public void setId(int id) {
 		this.id = id;
 	}
+
+	public LocalDate getDataEmissao() {
+		return dataEmissao;
+	}
+
+	public void setDataEmissao(LocalDate dataEmissao) {
+		this.dataEmissao = dataEmissao;
+	}
+
+	public LocalDate getDataPagamento() {
+		return dataPagamento;
+	}
+
+	public void setDataPagamento(LocalDate dataPagamento) {
+		this.dataPagamento = dataPagamento;
+	}
+
+	public boolean isPago() {
+		return pago;
+	}
+
+	public void setPago(boolean pago) {
+		this.pago = pago;
+	}
+
+	public float getValor() {
+		return valor;
+	}
+
+	public void setValor(float valor) {
+		this.valor = valor;
+	}
 	
 	
 }

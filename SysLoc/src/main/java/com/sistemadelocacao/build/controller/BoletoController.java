@@ -1,8 +1,7 @@
 package com.sistemadelocacao.build.controller;
 
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +18,7 @@ import java.util.List;
 
 import com.sistemadelocacao.build.entities.Boleto;
 import com.sistemadelocacao.build.repository.Boletos;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 @RestController
 @RequestMapping("/apirest/boleto")
@@ -76,13 +76,21 @@ public class BoletoController {
                 		"Boleto não encontrado"));
     }
     
+    @PutMapping("/pagar/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity pagarBoleto(@PathVariable Integer id) throws JsonProcessingException{
+        Boleto b = boletos.findById(id).orElseThrow(() -> new ResponseStatusException(
+        		HttpStatus.NOT_FOUND, 
+            	"Boleto não encontrado"
+        		));
+        b.pagarBoleto();
+        boletos.save(b);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
 	
-	  @GetMapping 
-	  public List<Boleto> find(Boleto filtro ){ ExampleMatcher matcher = ExampleMatcher .matching() .withIgnoreCase() .withStringMatcher(
-	  ExampleMatcher.StringMatcher.CONTAINING);
-	  
-	  Example example = Example.of(filtro, matcher); 
-	  return boletos.findAll(example); 
-	  }
+	@GetMapping 
+	public List<Boleto> findAllBoletos(){ 
+	return boletos.findAll();
+	}
 	 
 }

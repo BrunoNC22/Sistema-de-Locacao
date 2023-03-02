@@ -1,5 +1,6 @@
 package com.sistemadelocacao.build.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,6 +12,7 @@ public class Cliente {
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	private int id;
+	@Column
 	private String nome, tel, endereco, cpf, cnpj, tipo, email;
 	
 	public Cliente(String nome, String tel, String endereco, String cpf, String cnpj, String tipo,
@@ -23,6 +25,8 @@ public class Cliente {
 		this.tipo = tipo;
 		this.email = email;
 	}
+	
+	public Cliente() {}
 
 	public int getId() {
 		return id;
@@ -30,6 +34,62 @@ public class Cliente {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getTel() {
+		return tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+
+	public String getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getCnpj() {
+		return cnpj;
+	}
+
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	
