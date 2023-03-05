@@ -169,3 +169,6 @@ Caused by: org.h2.jdbc.JdbcSQLInvalidAuthorizationSpecException: Wrong user name
 2023-03-04 22:52:56 jdbc[13]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DELETE [*]* FROM BOLETO"; expected "identifier"; SQL statement:
 DELETE * FROM BOLETO [42001-214]
+2023-03-05 18:19:38 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * [*]FROMPEDIDO_PRODUTO  ASSOCIACAO_PEDIDO_PRODUTOS"; SQL statement:
+SELECT * FROMPEDIDO_PRODUTO  ASSOCIACAO_PEDIDO_PRODUTOS [42000-214]

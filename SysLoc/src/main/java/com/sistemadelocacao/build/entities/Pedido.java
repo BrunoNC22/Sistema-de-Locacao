@@ -13,7 +13,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.Pattern;
 
 @Entity
@@ -46,7 +48,8 @@ public class Pedido {
 	@Column(nullable = true, updatable = true)
 	private float valorTotal;
 	
-	@OneToMany(targetEntity = Produto.class)
+	@ManyToMany
+	@JoinTable(name = "associacao_pedido_produtos", joinColumns = @JoinColumn(referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(referencedColumnName = "id"))
 	private List<Produto> produto;
 	
 	public Pedido(LocalDate dataInicio ,int periodo, String endereco) {
@@ -65,7 +68,12 @@ public class Pedido {
 	private String gerarPeriodo(LocalDate dataInicio, LocalDate dataFim, int periodo) {
 		String stringDataInicio = dataInicio.format(DateTimeFormatter.ofPattern("dd/MM/YYYY"));
 		String stringDataFim = dataFim.format(DateTimeFormatter.ofPattern("dd/MM/YYYY"));
-		return stringDataInicio + " ate " + stringDataFim + " " + periodo + " dias";
+		if (periodo < 10) {
+			return stringDataInicio + " ate " + stringDataFim + " 0" + periodo + " dias";
+		}
+		else {
+			return stringDataInicio + " ate " + stringDataFim + " " + periodo + " dias";
+		}
 	}
 	
 	public void adicionarProduto(Produto produto) {
@@ -136,6 +144,22 @@ public class Pedido {
 
 	public void setValorTotal(float valorTotal) {
 		this.valorTotal = valorTotal;
+	}
+
+	public String getStringPeriodo() {
+		return stringPeriodo;
+	}
+
+	public void setStringPeriodo(String stringPeriodo) {
+		this.stringPeriodo = stringPeriodo;
+	}
+
+	public List<Produto> getProduto() {
+		return produto;
+	}
+
+	public void setProduto(List<Produto> produto) {
+		this.produto = produto;
 	}
 	
 	

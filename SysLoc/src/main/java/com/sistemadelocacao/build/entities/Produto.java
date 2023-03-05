@@ -1,11 +1,14 @@
 package com.sistemadelocacao.build.entities;
 
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Produto {
@@ -21,6 +24,9 @@ public class Produto {
 	private float valorSemana;
 	@Column(nullable = false, updatable = true)
 	private float valorMes;
+	
+	@ManyToMany(mappedBy = "produto")
+	private List<Pedido> pedidosEmQueAparece;
 	
 	public Produto(String descricao, float valorDia, float valorSemana, float valorMes) {
 		this.descricao = descricao;
@@ -69,6 +75,14 @@ public class Produto {
 
 	public void setValorMes(float valorMes) {
 		this.valorMes = valorMes;
+	}
+
+	public List<Pedido> getPedidosEmQueAparece() {
+		return pedidosEmQueAparece;
+	}
+
+	public void setPedidosEmQueAparece(List<Pedido> pedidosEmQueAparece) {
+		this.pedidosEmQueAparece = pedidosEmQueAparece;
 	}
 	
 	
