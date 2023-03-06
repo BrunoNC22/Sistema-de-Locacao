@@ -1,10 +1,14 @@
 package com.sistemadelocacao.build.entities;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Cliente {
@@ -27,6 +31,10 @@ public class Cliente {
 	@Column(nullable = false, updatable = true, length = 30)
 	private String email;
 	
+	@OneToMany()
+	@JoinColumn(name = "id_cliente")
+	private List<Pedido> pedidos; 
+	
 	public Cliente(String nome, String tel, String endereco, String cpf, String cnpj, String tipo,
 			String email) {
 		this.nome = nome;
@@ -39,6 +47,10 @@ public class Cliente {
 	}
 	
 	public Cliente() {}
+	
+	public void adicionarPedido(Pedido pedido) {
+		this.pedidos.add(pedido);
+	}
 
 	public int getId() {
 		return id;
@@ -102,6 +114,14 @@ public class Cliente {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
 
 	

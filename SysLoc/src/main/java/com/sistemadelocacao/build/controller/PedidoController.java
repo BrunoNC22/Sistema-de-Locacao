@@ -3,8 +3,10 @@ package com.sistemadelocacao.build.controller;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.sistemadelocacao.build.entities.Cliente;
 import com.sistemadelocacao.build.entities.Pedido;
 import com.sistemadelocacao.build.entities.Produto;
+import com.sistemadelocacao.build.repository.Clientes;
 import com.sistemadelocacao.build.repository.Pedidos;
 import com.sistemadelocacao.build.repository.Produtos;
 
@@ -28,10 +30,12 @@ public class PedidoController {
 	
 	private Pedidos pedidos;
 	private Produtos produtos;
+	private Clientes clientes;
 	
-	public PedidoController(Pedidos pedidos, Produtos produtos) {
+	public PedidoController(Pedidos pedidos, Produtos produtos, Clientes clientes) {
 		this.pedidos = pedidos;
 		this.produtos = produtos;
+		this.clientes = clientes;
 	}
 	
 	@GetMapping("/{id}")
@@ -81,12 +85,24 @@ public class PedidoController {
     
     @PutMapping("/adicionar-produto/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Pedido adicionarProduto(@PathVariable Integer id, @RequestParam(name = "produtoId") int produtoId) {
+    public Pedido adicionarProduto(@PathVariable Integer id, @RequestParam(name = "produtoid") int produtoId) {
     	Produto produto = produtos.findById(produtoId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     	Pedido pedido = pedidos.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     	
     	pedido.adicionarProduto(produto);
     	return pedidos.save(pedido);
+    }
+    
+    @PutMapping("/atribuir-cliente/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void atribuirCliente(@PathVariable Integer id, @RequestParam(name = "clienteid") int clienteId) {
+    	Pedido pedido = pedidos.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    	Cliente cliente = clientes.findById(clienteId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    	
+    	pedido.setClienteResponsavel(cliente);
+    	cliente.adicionarPedido(pedido);
+    	pedidos.save(pedido);
+    	clientes.save(cliente);
     }
     
     @GetMapping

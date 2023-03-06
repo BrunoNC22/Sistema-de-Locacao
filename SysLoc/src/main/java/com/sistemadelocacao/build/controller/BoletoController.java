@@ -18,7 +18,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.sistemadelocacao.build.entities.Boleto;
+import com.sistemadelocacao.build.entities.Pedido;
 import com.sistemadelocacao.build.repository.Boletos;
+import com.sistemadelocacao.build.repository.Pedidos;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 @RestController
@@ -26,9 +28,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 public class BoletoController {
 	
 	private Boletos boletos;
+	private Pedidos pedidos;
 	
-	public BoletoController( Boletos boletos) {
+	public BoletoController(Boletos boletos, Pedidos pedidos) {
 		this.boletos = boletos;
+		this.pedidos = pedidos;
 	}
 	
 	@GetMapping("/{id}")
@@ -43,9 +47,14 @@ public class BoletoController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Boleto save(
-			@RequestParam(value = "valor") float valor) { 
-		return boletos.save(new Boleto(valor));
+	public Boleto save(@RequestParam(value = "valor") float valor, @RequestParam(name = "idpedido") int idPedido) { 
+		Boleto boleto = new Boleto(valor);
+		Pedido pedido = pedidos.findById(idPedido).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		
+		boleto.setPedido(pedido);
+		/* pedido.adicionarBoleto();
+		pedidos.save(pedido); */
+		return boletos.save(boleto);
 	}
 	
     @DeleteMapping("/{id}")

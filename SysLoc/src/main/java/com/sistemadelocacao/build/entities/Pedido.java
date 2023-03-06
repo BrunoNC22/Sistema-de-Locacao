@@ -16,6 +16,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Pattern;
 
 @Entity
@@ -51,6 +53,14 @@ public class Pedido {
 	@ManyToMany
 	@JoinTable(name = "associacao_pedido_produtos", joinColumns = @JoinColumn(referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(referencedColumnName = "id"))
 	private List<Produto> produto;
+	
+	@ManyToOne
+	@JoinColumn(name="id_pedido")
+	private Cliente clienteResponsavel;
+	
+	@OneToMany
+	@JoinColumn
+	private List<Boleto> boletos;
 	
 	public Pedido(LocalDate dataInicio ,int periodo, String endereco) {
 		this.dataFim = dataInicio.plusDays(periodo);
@@ -88,6 +98,10 @@ public class Pedido {
 			this.valorTotal = this.valorTotal + produto.getValorMes();
 		}
 		
+	}
+	
+	public void adicionarBoleto(Boleto boleto) {
+		this.boletos.add(boleto);
 	}
 
 	public int getId() {
@@ -160,6 +174,14 @@ public class Pedido {
 
 	public void setProduto(List<Produto> produto) {
 		this.produto = produto;
+	}
+
+	public Cliente getClienteResponsavel() {
+		return clienteResponsavel;
+	}
+
+	public void setClienteResponsavel(Cliente clienteResponsavel) {
+		this.clienteResponsavel = clienteResponsavel;
 	}
 	
 	

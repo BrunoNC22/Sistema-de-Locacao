@@ -14,11 +14,9 @@ public class Boleto {
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	private int id;
 	
-	
 	@Column(nullable = true, updatable = true)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dataEmissao;
-	
 	
 	@Column(nullable = true, updatable = true)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -29,6 +27,10 @@ public class Boleto {
 	
 	@Column(nullable = false, updatable = true)
 	private float valor;
+	
+	@ManyToOne
+	@JoinColumn(name = "fk_pedido")
+	private Pedido pedido;
 	
 	
 	public Boleto (float valor) {
@@ -81,6 +83,14 @@ public class Boleto {
 
 	public void setValor(float valor) {
 		this.valor = valor;
+	}
+
+	public Pedido getPedido() {
+		return pedido;
+	}
+
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
 	}
 	
 	
