@@ -17,14 +17,16 @@ public class ClienteControllerView {
 	@Autowired
 	private Clientes clientes;
 	
-	public ClienteControllerView(Clientes clientes) {
-		this.clientes = clientes;
-	}
-	
 	@GetMapping(path = "/{id}")
-	public String buscar(@PathVariable("id") int id, Model model) {
+	public String buscar(@PathVariable int id, Model model) {
 		model.addAttribute("cliente", clientes.findById(id).orElseThrow());
 		return "cliente";
+	}
+	
+	@GetMapping
+	public String buscarClientes(Model model) {
+		model.addAttribute("clientes", clientes.findAll());
+		return "clientes";
 	}
 	
 }
