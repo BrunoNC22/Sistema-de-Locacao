@@ -183,7 +183,4 @@ public class Pedido {
 	public void setClienteResponsavel(Cliente clienteResponsavel) {
 		this.clienteResponsavel = clienteResponsavel;
 	}
-	
-	
-	
 }
