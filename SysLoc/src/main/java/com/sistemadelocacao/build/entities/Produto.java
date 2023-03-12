@@ -84,6 +84,12 @@ public class Produto {
 	public void setPedidosEmQueAparece(List<Pedido> pedidosEmQueAparece) {
 		this.pedidosEmQueAparece = pedidosEmQueAparece;
 	}
+
+	@Override
+	public String toString() {
+		return "Produto [id=" + id + ", descricao=" + descricao + ", valorDia=" + valorDia + ", valorSemana="
+				+ valorSemana + ", valorMes=" + valorMes + "]";
+	}
 	
 	
 }

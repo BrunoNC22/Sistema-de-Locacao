@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -40,9 +41,9 @@ private Produtos produtos;
 	}
 	
 	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
-	public Produto save(@RequestBody Produto produto) { 
-		return produtos.save(produto);
+	public String save(Produto produto) { 
+		produtos.save(produto);
+		return "redirect:/produtos";
 	}
 	
     @DeleteMapping("{id}")
