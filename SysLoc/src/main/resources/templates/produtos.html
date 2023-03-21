@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thyleaf.org">
+
+<head th:replace="~{fragmentos :: header}"></head>
+
+<body>
+	<div th:replace="~{fragmentos :: navbar}"></div>
+	<div class="container">
+		<div class="row mb-3" style="margin-top: 10px">
+			<h3 class="col">Produtos cadastrados:</h3>
+			<div class="col" style="text-align: center">
+				<a href="/produtos/new" class="btn btn-primary">Cadastrar produto</a>
+			</div>
+		</div>
+		<div class="border rounded overflow-auto" style="height: 60vh;">
+			<table class="table table-light table-hover table-striped">
+				<thead>
+					<tr>
+						<th scope="col">Id</th>
+						<th scope="col">Descrição</th>
+						<th scope="col">Valor diário</th>
+						<th scope="col">Valor semanal</th>
+						<th scope="col">Valor mensal</th>
+						<th scope="col" style="text-align: center">Deletar</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="produto : ${produtos}">
+						<th th:text="${produto.id}"></th>
+						<td th:text="${produto.descricao}"></td>
+						<td th:text="${produto.valorDia}"></td>
+						<td th:text="${produto.valorSemana}"></td>
+						<td th:text="${produto.valorMes}"></td>
+						<td style="text-align: center">
+							<a class="btn btn-outline-danger btn-sm" data-bs-toggle="modal"
+								th:data-bs-target="'#exampleModal'+${produto.id}">X</a>
+
+							<!-- Modal -->
+							<div class="modal fade" th:id="*{'exampleModal'+{produto.id}}" tabindex="-1"
+								aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">
+												Atenção!
+											</h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal"
+												aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											<a th:text="'Deseja realmente excluir '+${produto.descricao}+'?'"></a>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+												Cancelar
+											</button>
+											<a th:href="@{/produtos/{produtoid}/delete(produtoid = ${produto.id})}"
+												class="btn btn-primary">Confirmar</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>
