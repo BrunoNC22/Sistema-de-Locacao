@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.sistemadelocacao.build.entities.Produto;
 import com.sistemadelocacao.build.repository.Produtos;
+import com.sistemadelocacao.build.services.ProdutoService;
 
 
 @Controller
@@ -18,11 +19,11 @@ import com.sistemadelocacao.build.repository.Produtos;
 public class ProdutoControllerView {
 	
 	@Autowired
-	private Produtos produtos;
+	private ProdutoService service;
 	
 	@GetMapping
 	public String buscarProdutos(Model model) {
-		model.addAttribute("produtos", produtos.findAll());
+		model.addAttribute("produtos", service.buscarProdutos());
 		return "produtos";
 	}
 	
@@ -35,13 +36,13 @@ public class ProdutoControllerView {
 	
 	@GetMapping("/{id}/delete")
 	public String delete(@PathVariable int id) {
-		produtos.deleteById(id);
+		service.delete(id);
 		return "redirect:/produtos";
 	}
 	
 	@PostMapping
 	public String save(Produto produto) { 
-		produtos.save(produto);
+		service.novo(produto);
 		return "redirect:/produtos";
 	}
 }

@@ -10,24 +10,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sistemadelocacao.build.entities.Cliente;
-import com.sistemadelocacao.build.repository.Clientes;
+import com.sistemadelocacao.build.services.ClienteService;
 
 @Controller
 @RequestMapping(path = "/clientes")
 public class ClienteControllerView {
 	
 	@Autowired
-	private Clientes clientes;
+	private ClienteService service;
 	
 	@GetMapping(path = "/{id}")
 	public String buscar(@PathVariable int id, Model model) {
-		model.addAttribute("cliente", clientes.findById(id).orElseThrow());
+		model.addAttribute("cliente", service.buscar(id));
 		return "cliente";
 	}
 	
 	@GetMapping
 	public String buscarClientes(Model model) {
-		model.addAttribute("clientes", clientes.findAll());
+		model.addAttribute("clientes", service.buscarClientes());
 		return "clientes";
 	}
 	
@@ -39,13 +39,13 @@ public class ClienteControllerView {
 	
 	@GetMapping("/{id}/delete")
 	public String delete(@PathVariable int id) {
-		clientes.deleteById(id);
+		service.deletar(id);
 		return "redirect:/clientes";
 	}
 	
 	@PostMapping
 	public String save(Cliente cliente) {
-		clientes.save(cliente);
+		service.novo(cliente);
 		return "redirect:/clientes";
 	}
 	

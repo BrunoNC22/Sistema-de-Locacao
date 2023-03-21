@@ -6,13 +6,13 @@
 <body>
 	<div th:replace="~{fragmentos :: navbar}"></div>
 	<div class="container">
-		<div class="row" style="margin-top: 10px">
+		<div class="row mb-3" style="margin-top: 10px">
 			<h3 class="col">Produtos cadastrados:</h3>
 			<div class="col" style="text-align: center">
 				<a href="/produtos/new" class="btn btn-primary">Cadastrar produto</a>
 			</div>
 		</div>
-		<div class="overflow-auto" style="height: 60vh;">
+		<div class="border rounded overflow-auto" style="height: 60vh;">
 			<table class="table table-light table-hover table-striped">
 				<thead>
 					<tr>
