@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thyleaf.org">
+
+<head th:replace="~{fragmentos :: header}">
+</head>
+
+<body>
+	<div th:replace="~{fragmentos :: navbar}"></div>
+
+	<div class="container mt-4">
+		<div class="row align-itens-center ">
+			<div class="col-md-10 col-lg-5 mx-auto ">
+				<form action="#" method="GET" class="p-4 border rounded-3 bg-light">
+					<div class="form-floating mb-3">
+						<input class="form-control" placeholder="Login" type="text" id="inputLogin">
+						<label for="inputLogin">Login</label>
+					</div>
+					<div class="form-floating mb-3">
+						<input class="form-control" placeholder="Login" type="text" id="inputSenha">
+						<label for="inputSenha">Senha</label>
+					</div>
+					<button type="submit" class="w-100 btn btn-lg btn-success">Entrar</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>
