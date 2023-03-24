@@ -1,15 +1,11 @@
 package com.sistemadelocacao.build.controller.apirest;
 
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
-import com.sistemadelocacao.build.entities.Cliente;
 import com.sistemadelocacao.build.entities.Pedido;
-import com.sistemadelocacao.build.entities.Produto;
-import com.sistemadelocacao.build.repository.Clientes;
-import com.sistemadelocacao.build.repository.Pedidos;
-import com.sistemadelocacao.build.repository.Produtos;
+import com.sistemadelocacao.build.services.PedidoService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,86 +24,49 @@ import java.util.List;
 @RequestMapping("/apirest/pedido")
 public class PedidoController {
 	
-	private Pedidos pedidos;
-	private Produtos produtos;
-	private Clientes clientes;
-	
-	public PedidoController(Pedidos pedidos, Produtos produtos, Clientes clientes) {
-		this.pedidos = pedidos;
-		this.produtos = produtos;
-		this.clientes = clientes;
-	}
+	@Autowired
+	private PedidoService service;
 	
 	@GetMapping("/{id}")
-	public Pedido getBoletoById(@PathVariable Integer id) {
-		return pedidos
-				.findById(id)
-		        .orElseThrow(() -> 
-		        	new ResponseStatusException(
-		        			HttpStatus.NOT_FOUND,
-		                    "Pedido não encontrado"));
+	public Pedido buscarBoleto(@PathVariable Integer id) {
+		return service.buscarPedido(id);
 	}
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Pedido save(@RequestParam(name = "dataInicio") LocalDate dataInicio, @RequestParam(name = "periodo") int periodo, @RequestParam(name = "endereco") String endereco) {
+	public void save(@RequestParam(name = "dataInicio") LocalDate dataInicio, @RequestParam(name = "periodo") int periodo, @RequestParam(name = "endereco") String endereco) {
 		Pedido pedido = new Pedido(dataInicio, periodo, endereco);
-		return pedidos.save(pedido);
+		service.save(pedido);
 	}
 	
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete( @PathVariable Integer id ){
-        pedidos.findById(id)
-                .map( pedido -> {
-                    pedidos.delete(pedido);
-                    return pedido;
-                })
-                .orElseThrow(() -> new ResponseStatusException(
-                		HttpStatus.NOT_FOUND,
-                        "Pedido não encontrado"));
+        service.delete(id);
     }
     
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update( @PathVariable Integer id,
                         @RequestBody Pedido pedido ){
-        pedidos
-                .findById(id)
-                .map( pedidoExistente -> {
-                    pedido.setId(pedidoExistente.getId());
-                    pedidos.save(pedido);
-                    return pedidoExistente;
-                }).orElseThrow(() -> new ResponseStatusException(
-                		HttpStatus.NOT_FOUND, 
-                		"Pedido não encontrado"));
+        service.update(id, pedido);
     }
     
     @PutMapping("/adicionar-produto/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Pedido adicionarProduto(@PathVariable Integer id, @RequestParam(name = "produtoid") int produtoId) {
-    	Produto produto = produtos.findById(produtoId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-    	Pedido pedido = pedidos.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-    	
-    	pedido.adicionarProduto(produto);
-    	return pedidos.save(pedido);
+    public void adicionarProduto(@PathVariable Integer id, @RequestParam(name = "produtoid") int produtoId) {
+    	service.adicionarProduto(id, produtoId);
     }
     
     @PutMapping("/atribuir-cliente/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void atribuirCliente(@PathVariable Integer id, @RequestParam(name = "clienteid") int clienteId) {
-    	Pedido pedido = pedidos.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-    	Cliente cliente = clientes.findById(clienteId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-    	
-    	pedido.setClienteResponsavel(cliente);
-    	cliente.adicionarPedido(pedido);
-    	pedidos.save(pedido);
-    	clientes.save(cliente);
+    	service.atribuirCliente(id, clienteId);
     }
     
     @GetMapping
     public List<Pedido> find(){
-        return pedidos.findAll();
+        return service.find();
     }
 	
 }

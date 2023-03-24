@@ -12,17 +12,27 @@ import com.sistemadelocacao.build.repository.Produtos;
 public class ProdutoService {
 	
 	@Autowired
-	private Produtos produtos;
+	private Produtos repositorio;
+	
+	public Produto buscarProdutoPorId(Integer id) {
+		return repositorio.findById(id).orElseThrow();
+	}
 	
 	public List<Produto> buscarProdutos() {
-		return produtos.findAll();
+		return repositorio.findAll();
 	}
 	
 	public void delete(int id) {
-		produtos.deleteById(id);
+		repositorio.deleteById(id);
 	}
 	
 	public void novo(Produto produto) { 
-		produtos.save(produto);
+		repositorio.save(produto);
+	}
+	
+	public void atualizarProduto(Integer id, Produto produtoAtualizado) {
+		Produto antigoProduto = buscarProdutoPorId(id);
+		produtoAtualizado.setId(antigoProduto.getId());
+		repositorio.save(produtoAtualizado);
 	}
 }

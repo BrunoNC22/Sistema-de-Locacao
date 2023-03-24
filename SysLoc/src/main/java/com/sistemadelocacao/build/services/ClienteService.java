@@ -24,14 +24,22 @@ public class ClienteService {
 		return clientes.findAll();
 	}
 	
+	public List<Cliente> buscarPorNome(String nome){
+		return clientes.procurarPorNome(nome);
+	}
 	
-	public String deletar(int id) {
+	public void deletar(int id) {
 		clientes.deleteById(id);
-		return "redirect:/clientes";
 	}
 	
 	
 	public void novo(Cliente cliente) {
 		clientes.save(cliente);
+	}
+	
+	public void atualizarCliente(Integer id, Cliente novoCliente) {
+		Cliente antigoCliente = clientes.findById(id).orElseThrow();
+		novoCliente.setId(antigoCliente.getId());
+		clientes.save(novoCliente);
 	}
 }
