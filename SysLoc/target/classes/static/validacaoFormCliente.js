@@ -18,7 +18,13 @@ inputTipo.addEventListener('input', checarInput);
 inputCpf.addEventListener('input', checarInput);
 inputCnpj.addEventListener('input', checarInput);
 
+// Checa se foi escolhido pessoa fisica ou juridica
 inputTipo.addEventListener('change', checarTipo)
+
+// Mascaras de input
+inputCpf.addEventListener('keypress', mascararCpf);
+inputCnpj.addEventListener('keypress', mascararCnpj);
+inputTelefone.addEventListener('keypress', mascararTel);
 
 // Função para verificar se todos os campos estão preenchidos
 function checarInput() {
@@ -48,6 +54,42 @@ function checarTipo(){
 	else {
 		campoCnpj.style.display = 'none';
 		campoCpf.style.display = 'none';
+	}
+}
+
+function mascararCpf(){
+	console.log(inputCpf.value.length)
+	if (inputCpf.value.length === 3 || inputCpf.value.length === 7){
+		inputCpf.value += '.';
+	}
+	else if(inputCpf.value.length === 11) {
+		inputCpf.value += '-';
+	}
+}
+
+function mascararCnpj(){
+	console.log(inputCnpj.value.length)
+	if (inputCnpj.value.length === 2 || inputCnpj.value.length === 6){
+		inputCnpj.value += '.';
+	}
+	else if(inputCnpj.value.length === 10) {
+		inputCnpj.value += '/';
+	}
+	else if(inputCnpj.value.length === 15) {
+		inputCnpj.value += '-';
+	}
+}
+
+function mascararTel(){
+	console.log(inputTelefone.value.length)
+	if (inputTelefone.value.length === 0){
+		inputTelefone.value += '('
+	}
+	else if (inputTelefone.value.length === 3){
+		inputTelefone.value += ') '
+	}
+	else if (inputTelefone.value.length === 10){
+		inputTelefone.value += '-'
 	}
 }
 

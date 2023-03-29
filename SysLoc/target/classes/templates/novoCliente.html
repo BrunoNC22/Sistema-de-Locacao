@@ -21,7 +21,7 @@
 					<div class="row">
 						<div class="col-lg-6">
 							<div class="form-floating mb-3">
-								<input name="tel" type="text" class="form-control" id="floatingInputTelefone"
+								<input autocomplete="off" maxlength="15" name="tel" type="text" class="form-control" id="floatingInputTelefone"
 									placeholder="Telefone do cliente">
 								<label for="floatingInputTelefone">Telefone</label>
 							</div>
@@ -44,17 +44,18 @@
 						<label for="floatingSelect">Tipo</label>
 					</div>
 					<div class="form-floating mb-3" style="display: none;" id="campoCpf">
-						<input name="cpf" type="text" class="form-control" id="floatingInputCpf"
+						<input autocomplete="off" maxlength="14" name="cpf" type="text" class="form-control" id="floatingInputCpf"
 							placeholder="Cpf do cliente">
 						<label for="floatingInputCpf">CPF</label>
 					</div>
 					<div class="form-floating mb-3" style="display: none;" id="campoCnpj">
-						<input name="cnpj" type="text" class="form-control" id="floatingInputCnpj"
+						<input autocomplete="off" maxlength="18" name="cnpj" type="text" class="form-control" id="floatingInputCnpj"
 							placeholder="Cnpj do cliente">
 						<label for="floatingInputCnpj">CNPJ</label>
 					</div>
 					<div class="text-center">
-						<button type="submit" id="submitButton" disabled="disabled" class="btn btn-primary">Enviar</button>
+						<button type="submit" id="submitButton" disabled="disabled"
+							class="btn btn-primary">Enviar</button>
 					</div>
 
 				</form>
@@ -62,7 +63,6 @@
 			</div>
 		</div>
 	</div>
-
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 		crossorigin="anonymous"></script>

@@ -23,50 +23,53 @@ import java.util.List;
 @RestController
 @RequestMapping("/apirest/pedido")
 public class PedidoController {
-	
+
 	@Autowired
 	private PedidoService service;
-	
+
 	@GetMapping("/{id}")
 	public Pedido buscarBoleto(@PathVariable Integer id) {
 		return service.buscarPedido(id);
 	}
-	
+
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public void save(@RequestParam(name = "dataInicio") LocalDate dataInicio, @RequestParam(name = "periodo") int periodo, @RequestParam(name = "endereco") String endereco) {
+	public void save(
+			@RequestParam(name = "dataInicio") LocalDate dataInicio,
+			@RequestParam(name = "periodo") int periodo, 
+			@RequestParam(name = "endereco") String endereco
+			) {
 		Pedido pedido = new Pedido(dataInicio, periodo, endereco);
 		service.save(pedido);
 	}
-	
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete( @PathVariable Integer id ){
-        service.delete(id);
-    }
-    
-    @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update( @PathVariable Integer id,
-                        @RequestBody Pedido pedido ){
-        service.update(id, pedido);
-    }
-    
-    @PutMapping("/adicionar-produto/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void adicionarProduto(@PathVariable Integer id, @RequestParam(name = "produtoid") int produtoId) {
-    	service.adicionarProduto(id, produtoId);
-    }
-    
-    @PutMapping("/atribuir-cliente/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void atribuirCliente(@PathVariable Integer id, @RequestParam(name = "clienteid") int clienteId) {
-    	service.atribuirCliente(id, clienteId);
-    }
-    
-    @GetMapping
-    public List<Pedido> find(){
-        return service.find();
-    }
-	
+
+	@DeleteMapping("/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void delete(@PathVariable Integer id) {
+		service.delete(id);
+	}
+
+	@PutMapping("/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void update(@PathVariable Integer id, @RequestBody Pedido pedido) {
+		service.update(id, pedido);
+	}
+
+	@PutMapping("/adicionar-produto/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void adicionarProduto(@PathVariable Integer id, @RequestParam(name = "produtoid") int produtoId) {
+		service.adicionarProduto(id, produtoId);
+	}
+
+	@PutMapping("/atribuir-cliente/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void atribuirCliente(@PathVariable Integer id, @RequestParam(name = "clienteid") int clienteId) {
+		service.atribuirCliente(id, clienteId);
+	}
+
+	@GetMapping
+	public List<Pedido> find() {
+		return service.find();
+	}
+
 }

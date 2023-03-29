@@ -14,7 +14,7 @@ import jakarta.persistence.OneToMany;
 public class Cliente {
 	
 	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private int id;
 	@Column(nullable = false, updatable = true, length = 30)
 	private String nome;
@@ -22,9 +22,9 @@ public class Cliente {
 	private String tel;
 	@Column(nullable = true, updatable = true, length = 30)
 	private String endereco;
-	@Column(unique = true, nullable = true, updatable = true, length = 14)
+	@Column(nullable = true, updatable = true, length = 14)
 	private String cpf;
-	@Column(unique = true, nullable = true, updatable = true, length = 18)
+	@Column(nullable = true, updatable = true, length = 18)
 	private String cnpj;
 	@Column(nullable = false, updatable = true, length = 2)
 	private String tipo;
@@ -115,15 +115,6 @@ public class Cliente {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public List<Pedido> getPedidos() {
-		return pedidos;
-	}
-
-	public void setPedidos(List<Pedido> pedidos) {
-		this.pedidos = pedidos;
-	}
-
 	
 	
 }

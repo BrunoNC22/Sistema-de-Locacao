@@ -62,9 +62,4 @@ public class ClienteController {
 		service.atualizarCliente(id, cliente);
 	}
 	
-	
-	
-	
-	
-	
 }
