@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thyleaf.org">
+<head th:replace="~{fragmentos :: header}"></head>
+<body>
+	<div th:replace="~{fragmentos :: navbar}"></div>
+	
+	<div class="cliente" th:object="${cliente}">
+		<span th:text="*{'Id: '+id}"/> <br>
+		<span th:text="*{'Nome: '+nome}"/><br>
+		<span th:text="*{'Telefone: '+tel}"/><br>
+		<span th:text="*{'Endereco: '+endereco}"/><br>
+		<span th:text="*{'CPF: '+cpf}"/><br>
+		<span th:text="*{'CNPJ: '+cnpj}"/><br>
+		<span th:text="*{'Tipo: '+tipo}"/><br>
+		<span th:text="*{'Email: '+email}"/>
+	</div>
+	
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
+</body>
+</html>
