@@ -1,7 +1,5 @@
-package com.sistemadelocacao.build.controller.apirest;
+package com.sistemadelocacao.build.controller;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,9 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.sistemadelocacao.build.entities.Funcionario;
-import com.sistemadelocacao.build.services.FuncionarioService;
+import com.sistemadelocacao.build.repository.Funcionarios;
 
 import java.util.List;
 
@@ -22,37 +21,59 @@ import java.util.List;
 @RequestMapping("/apirest/funcionario")
 public class FuncionarioController {
 	
-	@Autowired
-	private FuncionarioService service;
+private Funcionarios funcionarios;
+	
+	public FuncionarioController( Funcionarios funcionarios) {
+		this.funcionarios = funcionarios;
+	}
 	
 	@GetMapping("{id}")
 	public Funcionario getBoletoById(@PathVariable Integer id) {
-		return service.getBoletoById(id);
+		return funcionarios
+				.findById(id)
+		        .orElseThrow(() -> 
+		        	new ResponseStatusException(
+		        			HttpStatus.NOT_FOUND,
+		                    "Boleto não encontrado"));
 	}
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Funcionario save(@RequestBody Funcionario funcionario) { 
-		return service.save(funcionario);
+		return funcionarios.save(funcionario);
 	}
 	
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete( @PathVariable Integer id ){
-        service.delete(id);
+        funcionarios.findById(id)
+                .map( funcionario -> {
+                    funcionarios.delete(funcionario);
+                    return funcionario;
+                })
+                .orElseThrow(() -> new ResponseStatusException(
+                		HttpStatus.NOT_FOUND,
+                        "Funcionario não encontrado"));
     }
     
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update( @PathVariable Integer id,
                         @RequestBody Funcionario funcionario ){
-        service.update(id, funcionario);
+        funcionarios
+                .findById(id)
+                .map( boletoExistente -> {
+                    funcionario.setId(boletoExistente.getId());
+                    funcionarios.save(funcionario);
+                    return boletoExistente;
+                }).orElseThrow(() -> new ResponseStatusException(
+                		HttpStatus.NOT_FOUND, 
+                		"Funcionario não encontrado"));
     }
     
     @GetMapping
     public List<Funcionario> find(){
-
-        return service.find();
+        return funcionarios.findAll();
     }
 	
 }

@@ -1,5 +1,6 @@
 package com.sistemadelocacao.build.entities;
 
+
 import org.hibernate.validator.constraints.Length;
 
 import com.sistemadelocacao.build.annotations.TelefoneValidation;
@@ -20,6 +21,7 @@ public class Funcionario {
 	@TelefoneValidation
 	private String tel;
 	
+
 	@Column(nullable = false, updatable = true, length = 20)
 	private String senha;
 	

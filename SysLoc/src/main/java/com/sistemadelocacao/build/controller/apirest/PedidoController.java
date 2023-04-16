@@ -71,5 +71,4 @@ public class PedidoController {
 	public List<Pedido> find() {
 		return service.find();
 	}
-
 }
