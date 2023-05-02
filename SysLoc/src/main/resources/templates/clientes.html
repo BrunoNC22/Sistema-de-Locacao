@@ -19,7 +19,7 @@
 					<tr>
 						<th scope="col">Id</th>
 						<th scope="col">Nome</th>
-						<th scope="col">CPF</th>
+						<th scope="col">CPF/CNPJ</th>
 						<th scope="col">Email</th>
 						<th scope="col">Telefone</th>
 						<th scope="col" style="text-align: center;">Deletar</th>
@@ -29,7 +29,8 @@
 					<tr th:each="cliente : ${clientes}">
 						<th th:text="${cliente.id}"></th>
 						<td th:text="${cliente.nome}"></td>
-						<td th:text="${cliente.cpf}"></td>
+						<td th:if="${cliente.tipo == 'PF'}" th:text="${cliente.cpf}"></td>
+						<td th:if="${cliente.tipo == 'PJ'}" th:text="${cliente.cnpj}"></td>
 						<td th:text="${cliente.email}"></td>
 						<td th:text="${cliente.tel}"></td>
 						<td style="text-align: center;">

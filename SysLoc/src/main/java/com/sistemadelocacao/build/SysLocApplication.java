@@ -9,5 +9,4 @@ public class SysLocApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SysLocApplication.class, args);
 	}
-
 }

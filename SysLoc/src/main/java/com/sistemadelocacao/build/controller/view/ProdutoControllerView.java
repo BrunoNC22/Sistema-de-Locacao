@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sistemadelocacao.build.entities.Produto;
-import com.sistemadelocacao.build.repository.Produtos;
 import com.sistemadelocacao.build.services.ProdutoService;
 
 

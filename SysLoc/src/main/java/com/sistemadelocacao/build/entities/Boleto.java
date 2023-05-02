@@ -85,10 +85,6 @@ public class Boleto {
 		this.valor = valor;
 	}
 
-	public Pedido getPedido() {
-		return pedido;
-	}
-
 	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
 	}

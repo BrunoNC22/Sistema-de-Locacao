@@ -2,6 +2,14 @@ package com.sistemadelocacao.build.entities;
 
 import java.util.List;
 
+import org.hibernate.validator.constraints.Length;
+
+import com.sistemadelocacao.build.annotations.CnpjValidation;
+import com.sistemadelocacao.build.annotations.CpfValidation;
+import com.sistemadelocacao.build.annotations.EmailValidation;
+import com.sistemadelocacao.build.annotations.TelefoneValidation;
+import com.sistemadelocacao.build.annotations.TipoDePessoaValidation;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,24 +22,43 @@ import jakarta.persistence.OneToMany;
 public class Cliente {
 	
 	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private int id;
+	
 	@Column(nullable = false, updatable = true, length = 30)
+	@Length(max = 30, message = "O nome deve ter no maximo 30 caracteres")
 	private String nome;
+	
 	@Column(nullable = true, updatable = true, length = 15)
+	@Length(max = 15, message = "O telefone deve ter no maximo 15 caracteres")
+	@TelefoneValidation
 	private String tel;
+	
 	@Column(nullable = true, updatable = true, length = 30)
+	@Length(max = 30, message = "O endereco deve ter no maximo 30 caracteres")
 	private String endereco;
+	
 	@Column(nullable = true, updatable = true, length = 14)
+	@Length(max = 14, message = "O CPF deve ter no maximo 14 caracteres")
+	@CpfValidation
 	private String cpf;
+	
 	@Column(nullable = true, updatable = true, length = 18)
+	@Length(max = 18, message = "O CNPJ deve ter no maximo 18 caracteres")
+	@CnpjValidation
 	private String cnpj;
+	
 	@Column(nullable = false, updatable = true, length = 2)
+	@Length(max = 2, message = "O tipo deve ter no maximo 2 caracteres")
+	@TipoDePessoaValidation
 	private String tipo;
+	
 	@Column(nullable = false, updatable = true, length = 30)
+	@Length(max = 30, message = "O email deve ter no maximo 30 caracteres")
+	@EmailValidation
 	private String email;
 	
-	@OneToMany()
+	@OneToMany
 	@JoinColumn(name = "id_cliente")
 	private List<Pedido> pedidos; 
 	
@@ -115,15 +142,6 @@ public class Cliente {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public List<Pedido> getPedidos() {
-		return pedidos;
-	}
-
-	public void setPedidos(List<Pedido> pedidos) {
-		this.pedidos = pedidos;
-	}
-
 	
 	
 }
